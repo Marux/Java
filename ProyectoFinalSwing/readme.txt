@@ -1,4 +1,0 @@
-@alfred
-@eduardo
-@alexander
-@victor

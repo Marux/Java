@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 24-nov-2022 2:31:21 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Entidades.Sueldos" table="Sueldos" catalog="PROYECTOFINAL" optimistic-lock="version">
+        <id name="tipoCargo" type="int">
+            <column name="tipo_cargo" />
+            <generator class="assigned" />
+        </id>
+        <property name="sueldoBase" type="java.lang.Integer">
+            <column name="sueldo_base" />
+        </property>
+        <property name="bonoAsistencia" type="java.lang.Integer">
+            <column name="bono_asistencia" />
+        </property>
+        <property name="bonoResponsabilidad" type="java.lang.Integer">
+            <column name="bono_responsabilidad" />
+        </property>
+        <property name="porcentajeAfp" type="java.lang.Integer">
+            <column name="porcentaje_afp" />
+        </property>
+        <property name="porcentajeSalud" type="java.lang.Integer">
+            <column name="porcentaje_salud" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,5 +1,5 @@
 create table Empleado (
-id_empleado integer primary key,
+id_empleado int primary key,
 nombre varchar(30) not null,
 edad int(2) not null,
 direccion varchar(30) not null,

@@ -41,8 +41,5 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="PROYECTOFINAL"/>
-  <table-filter match-name="Cargos"/>
-  <table-filter match-name="Empresa"/>
-  <table-filter match-name="Sueldos"/>
-  <table-filter match-name="Empleados"/>
+  <table-filter match-name="Empleado"/>
 </hibernate-reverse-engineering>

@@ -11,14 +11,14 @@ sueldo_base int not null
 )
 
 CREATE TABLE AsistenciaEntrada(
-id int AUTO_INCREMENT,
+id int auto_increment,
 id_empleado int,
 fecha date,
 hora_entrada time,
-  PRIMARY KEY (id)
+PRIMARY KEY (id)
 );
 CREATE TABLE AsistenciaSalida(
-id int auto_increment ,
+id int auto_increment,
 id_empleado int,
 fecha date,
 hora_salida time,

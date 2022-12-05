@@ -11,6 +11,7 @@
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <Events>
+    <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
     <EventHandler event="windowActivated" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowActivated"/>
   </Events>
   <AuxValues>
@@ -50,104 +51,117 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="background2" min="-2" pref="206" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jPanelDatos" max="32767" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="direccion" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
-                                          <Component id="txtDireccion" min="-2" pref="250" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="obli4" min="-2" pref="46" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="edad" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
-                                          <Component id="txtEdad" min="-2" pref="250" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="obli3" min="-2" pref="46" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="nuevoColabolador" alignment="0" min="-2" pref="287" max="-2" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="email" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="comuna" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="boxComuna" pref="250" max="32767" attributes="0"/>
-                                              <Component id="txtEmail" max="32767" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="obli5" min="-2" pref="46" max="-2" attributes="0"/>
-                                              <Component id="obli6" min="-2" pref="46" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="nombre" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="txtNombre" min="-2" pref="250" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="identificador" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                                                  <Component id="txtIdentificador" max="32767" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="obli1" min="-2" pref="46" max="-2" attributes="0"/>
-                                              <Component id="obli2" min="-2" pref="46" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                  </Group>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="cargo" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="telefono" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtTelefono" max="32767" attributes="0"/>
-                              <Component id="boxCargo" pref="250" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="obli7" max="32767" attributes="0"/>
-                              <Component id="obli8" max="32767" attributes="0"/>
-                          </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="txtSueldoBase" min="-2" pref="130" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="bGuardar" min="-2" pref="192" max="-2" attributes="0"/>
-                                      <Component id="bVolver" min="-2" pref="192" max="-2" attributes="0"/>
-                                      <Component id="bListar" alignment="0" min="-2" pref="192" max="-2" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="bEditar" min="-2" pref="93" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="bConfirmar" min="-2" pref="93" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="bEliminar" alignment="0" min="-2" pref="192" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="jPanelDatos" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                               </Group>
-                              <Component id="sueldobase" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="direccion" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                                                  <Component id="txtDireccion" min="-2" pref="250" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="obli4" min="-2" pref="46" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="edad" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
+                                                  <Component id="txtEdad" min="-2" pref="250" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="obli3" min="-2" pref="46" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="email" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="comuna" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                      <Component id="boxComuna" pref="250" max="32767" attributes="0"/>
+                                                      <Component id="txtEmail" max="32767" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="obli5" min="-2" pref="46" max="-2" attributes="0"/>
+                                                      <Component id="obli6" min="-2" pref="46" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                      <Group type="102" alignment="0" attributes="0">
+                                                          <Component id="nombre" min="-2" max="-2" attributes="0"/>
+                                                          <EmptySpace max="-2" attributes="0"/>
+                                                          <Component id="txtNombre" min="-2" pref="250" max="-2" attributes="0"/>
+                                                      </Group>
+                                                      <Group type="102" alignment="0" attributes="0">
+                                                          <Component id="identificador" min="-2" max="-2" attributes="0"/>
+                                                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                                                          <Component id="txtIdentificador" max="32767" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="obli1" min="-2" pref="46" max="-2" attributes="0"/>
+                                                      <Component id="obli2" min="-2" pref="46" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="167" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <Component id="bSeleccionar" min="-2" pref="99" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="bActualizar" min="-2" pref="99" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                              <Component id="bListar" min="-2" pref="207" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="cargo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="telefono" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="txtTelefono" max="32767" attributes="0"/>
+                                              <Component id="boxCargo" pref="250" max="32767" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="obli7" max="32767" attributes="0"/>
+                                              <Component id="obli8" max="32767" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="txtSueldoBase" min="-2" pref="130" max="-2" attributes="0"/>
+                                              <Component id="sueldobase" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="bEliminar" alignment="0" pref="204" max="32767" attributes="0"/>
+                                                  <Component id="bVolver" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Component id="bGuardar" min="-2" pref="207" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="0" pref="26" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace min="0" pref="41" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="nuevoColabolador" min="-2" pref="287" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="230" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -161,78 +175,93 @@
                       <Group type="102" attributes="0">
                           <Component id="nuevoColabolador" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtNombre" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
-                              <Component id="nombre" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="obli1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="bGuardar" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txtIdentificador" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
-                              <Component id="obli2" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="bListar" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
-                              <Component id="identificador" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                  <Component id="bEditar" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="bConfirmar" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="txtNombre" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                                      <Component id="nombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="obli1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="txtIdentificador" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                                      <Component id="obli2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="identificador" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="txtEdad" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                                      <Component id="edad" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="obli3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                          <Component id="txtDireccion" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                                          <Component id="obli4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace pref="6" max="-2" attributes="0"/>
+                                          <Component id="direccion" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                          <Component id="obli5" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="boxComuna" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="bListar" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                                          <Component id="comuna" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="obli6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="bSeleccionar" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="bActualizar" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                                          <Component id="email" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtEmail" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Group type="103" groupAlignment="3" attributes="0">
+                                              <Component id="telefono" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txtTelefono" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
+                                              <Component id="obli7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="sueldobase" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <Group type="103" groupAlignment="3" attributes="0">
+                                                      <Component id="obli8" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="boxCargo" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="cargo" alignment="3" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="txtSueldoBase" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="jPanelDatos" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" attributes="0">
+                                                  <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                                                  <Component id="bVolver" min="-2" pref="29" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                                          <Component id="bEliminar" min="-2" pref="29" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
                               </Group>
-                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                  <Component id="txtEdad" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
-                                  <Component id="edad" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="obli3" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="bGuardar" min="-2" pref="29" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                  <Component id="txtDireccion" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
-                                  <Component id="obli4" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="bEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace pref="6" max="-2" attributes="0"/>
-                                  <Component id="direccion" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                  <Component id="obli5" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="boxComuna" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                                  <Component id="comuna" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="obli6" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                                  <Component id="email" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtEmail" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="telefono" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtTelefono" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
-                              <Component id="obli7" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="sueldobase" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="obli8" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="boxCargo" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="bVolver" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cargo" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtSueldoBase" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jPanelDatos" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
@@ -275,7 +304,7 @@
               <Font name="Lucida Grande" size="18" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="2"/>
-            <Property name="text" type="java.lang.String" value="Datos Colaborador"/>
+            <Property name="text" type="java.lang.String" value="Registro Colaborador"/>
             <Property name="horizontalTextPosition" type="int" value="10"/>
           </Properties>
         </Component>
@@ -452,9 +481,19 @@
         <Component class="javax.swing.JComboBox" name="boxCargo">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
+              <StringArray count="12">
                 <StringItem index="0" value="Colabolador"/>
                 <StringItem index="1" value="Supervisor"/>
+                <StringItem index="2" value="Ejecutivo Telefonico"/>
+                <StringItem index="3" value="Contador"/>
+                <StringItem index="4" value="RRHH"/>
+                <StringItem index="5" value="Secretaria"/>
+                <StringItem index="6" value="Operaciones"/>
+                <StringItem index="7" value="Soporte TI"/>
+                <StringItem index="8" value="Analista Programador"/>
+                <StringItem index="9" value="Gerente"/>
+                <StringItem index="10" value="Coordinador"/>
+                <StringItem index="11" value="Segurito"/>
               </StringArray>
             </Property>
             <Property name="selectedIndex" type="int" value="-1"/>
@@ -522,13 +561,13 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Lucida Grande" size="12" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Listar"/>
+            <Property name="text" type="java.lang.String" value="Listar/Refrescar"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bListarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="bEditar">
+        <Component class="javax.swing.JButton" name="bSeleccionar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="f9" red="e7" type="rgb"/>
@@ -536,13 +575,13 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Lucida Grande" size="12" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Editar"/>
+            <Property name="text" type="java.lang.String" value="Seleccionar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bEditarActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bSeleccionarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="bConfirmar">
+        <Component class="javax.swing.JButton" name="bActualizar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="f9" red="e7" type="rgb"/>
@@ -550,10 +589,10 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Lucida Grande" size="12" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Confirmar"/>
+            <Property name="text" type="java.lang.String" value="Actualizar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bConfirmarActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bActualizarActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="bEliminar">
@@ -612,19 +651,25 @@
                 <Component class="javax.swing.JTable" name="Tabla">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="8" rowCount="5">
-                        <Column editable="true" title="Nombre" type="java.lang.Object"/>
-                        <Column editable="true" title="Id" type="java.lang.Object"/>
-                        <Column editable="true" title="Edad" type="java.lang.Object"/>
-                        <Column editable="true" title="Direccion" type="java.lang.Object"/>
-                        <Column editable="true" title="Comuna" type="java.lang.Object"/>
-                        <Column editable="true" title="Email" type="java.lang.Object"/>
-                        <Column editable="true" title="Telefono" type="java.lang.Object"/>
-                        <Column editable="true" title="Cargo" type="java.lang.Object"/>
+                      <Table columnCount="9" rowCount="7">
+                        <Column editable="true" title="id_empleado" type="java.lang.Object"/>
+                        <Column editable="true" title="Nombre" type="java.lang.String"/>
+                        <Column editable="true" title="Edad" type="java.lang.Integer"/>
+                        <Column editable="true" title="Direccion" type="java.lang.String"/>
+                        <Column editable="true" title="Comuna" type="java.lang.String"/>
+                        <Column editable="true" title="Email" type="java.lang.String"/>
+                        <Column editable="true" title="Telefono" type="java.lang.Integer"/>
+                        <Column editable="true" title="Cargo" type="java.lang.String"/>
+                        <Column editable="true" title="Sueldo" type="java.lang.Integer"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                       <TableColumnModel selectionModel="0">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                           <Title/>
                           <Editor/>
@@ -671,6 +716,9 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="TablaMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -687,6 +735,14 @@
               <Font name="Lucida Grande" size="12" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Sueldo Base:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Lucida Grande" size="14" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Editar datos de colaborador:"/>
           </Properties>
         </Component>
       </SubComponents>

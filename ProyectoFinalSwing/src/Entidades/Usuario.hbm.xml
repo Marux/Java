@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-dic-2022 15:08:21 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Entidades.Usuario" table="usuario" catalog="PROYECTOFINAL" optimistic-lock="version">
+        <id name="idUsuario" type="int">
+            <column name="id_Usuario" />
+            <generator class="assigned" />
+        </id>
+        <property name="idEmpleado" type="java.lang.Integer">
+            <column name="id_empleado" />
+        </property>
+        <property name="pass" type="java.lang.Integer">
+            <column name="pass" />
+        </property>
+    </class>
+</hibernate-mapping>

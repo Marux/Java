@@ -10,6 +10,9 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -47,12 +50,15 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jPanelDatos" max="32767" attributes="0"/>
+                                      <Component id="jPanelDatos1" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace min="-2" pref="187" max="-2" attributes="0"/>
-                                          <Component id="Colaborador" min="-2" max="-2" attributes="0"/>
-                                      </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Component id="Asistencia" min="-2" max="-2" attributes="0"/>
@@ -65,17 +71,16 @@
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Component id="PreLiquidacion" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="bPreLiquidacion" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jbPreview" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="187" max="-2" attributes="0"/>
+                                          <Component id="Colaborador" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                                          <Component id="lblColaborador" min="-2" pref="219" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jPanelDatos" max="32767" attributes="0"/>
-                                      <Component id="jPanelDatos1" max="32767" attributes="0"/>
-                                  </Group>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -97,7 +102,13 @@
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="Colaborador" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="Colaborador" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="lblColaborador" max="32767" attributes="0"/>
+                          <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="Asistencia" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -109,7 +120,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="PreLiquidacion" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="bPreLiquidacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jbPreview" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jPanelDatos1" min="-2" max="-2" attributes="0"/>
@@ -134,7 +145,7 @@
               <Font name="Lucida Grande" size="18" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Bienvenido Colaborador"/>
+            <Property name="text" type="java.lang.String" value="Bienvenido"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="bEntrada">
@@ -171,7 +182,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bSalidaActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="bPreLiquidacion">
+        <Component class="javax.swing.JButton" name="jbPreview">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -184,6 +195,9 @@
               <Color id="Cursor de Mano"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbPreviewActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="bSalir">
           <Properties>
@@ -315,22 +329,79 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tablaAsistencia1">
+                <Component class="javax.swing.JTable" name="tblPreLiquidacion">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="10" rowCount="10">
-                        <Column editable="true" title="Id" type="java.lang.Object"/>
-                        <Column editable="true" title="Nombre" type="java.lang.Object"/>
-                        <Column editable="true" title="Dias Trabajados" type="java.lang.Object"/>
-                        <Column editable="true" title="Sueldo Base" type="java.lang.Object"/>
-                        <Column editable="true" title="Bono Asistencia" type="java.lang.Object"/>
-                        <Column editable="true" title="Bono Responsabilidad" type="java.lang.Object"/>
-                        <Column editable="true" title="Desc. AFP" type="java.lang.Object"/>
-                        <Column editable="true" title="Desc. Salud" type="java.lang.Object"/>
-                        <Column editable="true" title="Sueldo Bruto" type="java.lang.Object"/>
-                        <Column editable="true" title="Sueldo Liquido" type="java.lang.Object"/>
+                      <Table columnCount="10" rowCount="1">
+                        <Column editable="false" title="Id" type="java.lang.Object"/>
+                        <Column editable="false" title="Nombre" type="java.lang.Object"/>
+                        <Column editable="false" title="Dias Trabajados" type="java.lang.Object"/>
+                        <Column editable="false" title="Sueldo Base" type="java.lang.Object"/>
+                        <Column editable="false" title="Bono Asistencia" type="java.lang.Object"/>
+                        <Column editable="false" title="Bono Responsabilidad" type="java.lang.Object"/>
+                        <Column editable="false" title="Desc. AFP" type="java.lang.Object"/>
+                        <Column editable="false" title="Desc. Salud" type="java.lang.Object"/>
+                        <Column editable="false" title="Sueldo Bruto" type="java.lang.Object"/>
+                        <Column editable="false" title="Sueldo Liquido" type="java.lang.Object"/>
                       </Table>
                     </Property>
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                      <TableColumnModel selectionModel="0">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                      </TableColumnModel>
+                    </Property>
+                    <Property name="enabled" type="boolean" value="false"/>
+                    <Property name="rowHeight" type="int" value="79"/>
+                    <Property name="rowSelectionAllowed" type="boolean" value="false"/>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
@@ -340,6 +411,14 @@
             </Container>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JLabel" name="lblColaborador">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Lucida Sans" size="18" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="jLabel1"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

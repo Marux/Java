@@ -2,12 +2,10 @@ package Vista;
 
 import Datos.DatoFormulario;
 import javax.swing.JOptionPane;
-//import Entidades.Formulario;
-//import Negocio.NegocioFormulario;
-//import Entidades.Empleados;
 import Entidades.Empleado;
 import Negocio.NegocioFormulario;
-import java.awt.List;
+import java.util.Iterator;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -62,19 +60,23 @@ public class NuevoTrabajador extends javax.swing.JFrame {
         boxCargo = new javax.swing.JComboBox<>();
         boxComuna = new javax.swing.JComboBox<>();
         bListar = new javax.swing.JButton();
-        bEditar = new javax.swing.JButton();
-        bConfirmar = new javax.swing.JButton();
+        bSeleccionar = new javax.swing.JButton();
+        bActualizar = new javax.swing.JButton();
         bEliminar = new javax.swing.JButton();
         jPanelDatos = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
         txtSueldoBase = new javax.swing.JTextField();
         sueldobase = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
             }
@@ -96,7 +98,7 @@ public class NuevoTrabajador extends javax.swing.JFrame {
 
         nuevoColabolador.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         nuevoColabolador.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        nuevoColabolador.setText("Datos Colaborador");
+        nuevoColabolador.setText("Registro Colaborador");
         nuevoColabolador.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
 
         nombre.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
@@ -196,7 +198,7 @@ public class NuevoTrabajador extends javax.swing.JFrame {
         obli8.setForeground(new java.awt.Color(255, 51, 51));
         obli8.setText("*");
 
-        boxCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Colabolador", "Supervisor" }));
+        boxCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Colabolador", "Supervisor", "Ejecutivo Telefonico", "Contador", "RRHH", "Secretaria", "Operaciones", "Soporte TI", "Analista Programador", "Gerente", "Coordinador", "Segurito" }));
         boxCargo.setSelectedIndex(-1);
         boxCargo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -209,28 +211,28 @@ public class NuevoTrabajador extends javax.swing.JFrame {
 
         bListar.setBackground(new java.awt.Color(231, 249, 255));
         bListar.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
-        bListar.setText("Listar");
+        bListar.setText("Listar/Refrescar");
         bListar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bListarActionPerformed(evt);
             }
         });
 
-        bEditar.setBackground(new java.awt.Color(231, 249, 255));
-        bEditar.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
-        bEditar.setText("Editar");
-        bEditar.addActionListener(new java.awt.event.ActionListener() {
+        bSeleccionar.setBackground(new java.awt.Color(231, 249, 255));
+        bSeleccionar.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
+        bSeleccionar.setText("Seleccionar");
+        bSeleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bEditarActionPerformed(evt);
+                bSeleccionarActionPerformed(evt);
             }
         });
 
-        bConfirmar.setBackground(new java.awt.Color(231, 249, 255));
-        bConfirmar.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
-        bConfirmar.setText("Confirmar");
-        bConfirmar.addActionListener(new java.awt.event.ActionListener() {
+        bActualizar.setBackground(new java.awt.Color(231, 249, 255));
+        bActualizar.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
+        bActualizar.setText("Actualizar");
+        bActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bConfirmarActionPerformed(evt);
+                bActualizarActionPerformed(evt);
             }
         });
 
@@ -248,16 +250,31 @@ public class NuevoTrabajador extends javax.swing.JFrame {
 
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Id", "Edad", "Direccion", "Comuna", "Email", "Telefono", "Cargo"
+                "id_empleado", "Nombre", "Edad", "Direccion", "Comuna", "Email", "Telefono", "Cargo", "Sueldo"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        Tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(Tabla);
 
         javax.swing.GroupLayout jPanelDatosLayout = new javax.swing.GroupLayout(jPanelDatos);
@@ -285,88 +302,99 @@ public class NuevoTrabajador extends javax.swing.JFrame {
         sueldobase.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
         sueldobase.setText("Sueldo Base:");
 
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabel1.setText("Editar datos de colaborador:");
+
         javax.swing.GroupLayout tblColaboradoresLayout = new javax.swing.GroupLayout(tblColaboradores);
         tblColaboradores.setLayout(tblColaboradoresLayout);
         tblColaboradoresLayout.setHorizontalGroup(
             tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tblColaboradoresLayout.createSequentialGroup()
                 .addComponent(background2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tblColaboradoresLayout.createSequentialGroup()
-                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(tblColaboradoresLayout.createSequentialGroup()
-                                .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(tblColaboradoresLayout.createSequentialGroup()
-                                        .addComponent(direccion)
-                                        .addGap(59, 59, 59)
-                                        .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(obli4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(tblColaboradoresLayout.createSequentialGroup()
-                                        .addComponent(edad)
-                                        .addGap(82, 82, 82)
-                                        .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(obli3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(nuevoColabolador, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(tblColaboradoresLayout.createSequentialGroup()
-                                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(email)
-                                            .addComponent(comuna))
-                                        .addGap(65, 65, 65)
-                                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(boxComuna, 0, 250, Short.MAX_VALUE)
-                                            .addComponent(txtEmail))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(obli5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(obli6, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(tblColaboradoresLayout.createSequentialGroup()
-                                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addGroup(tblColaboradoresLayout.createSequentialGroup()
-                                                .addComponent(nombre)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(tblColaboradoresLayout.createSequentialGroup()
-                                                .addComponent(identificador)
-                                                .addGap(40, 40, 40)
-                                                .addComponent(txtIdentificador)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(obli1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(obli2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())
-                    .addGroup(tblColaboradoresLayout.createSequentialGroup()
-                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cargo)
-                            .addComponent(telefono))
-                        .addGap(62, 62, 62)
-                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtTelefono)
-                            .addComponent(boxCargo, 0, 250, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(obli7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(obli8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(tblColaboradoresLayout.createSequentialGroup()
-                                .addComponent(txtSueldoBase, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(59, 59, 59)
+                                .addComponent(jPanelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
+                            .addGroup(tblColaboradoresLayout.createSequentialGroup()
                                 .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(bGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(bVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(bListar, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(tblColaboradoresLayout.createSequentialGroup()
-                                        .addComponent(bEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(tblColaboradoresLayout.createSequentialGroup()
+                                                .addComponent(direccion)
+                                                .addGap(59, 59, 59)
+                                                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(obli4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(tblColaboradoresLayout.createSequentialGroup()
+                                                .addComponent(edad)
+                                                .addGap(82, 82, 82)
+                                                .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(obli3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(tblColaboradoresLayout.createSequentialGroup()
+                                                .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(email)
+                                                    .addComponent(comuna))
+                                                .addGap(65, 65, 65)
+                                                .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(boxComuna, 0, 250, Short.MAX_VALUE)
+                                                    .addComponent(txtEmail))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(obli5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(obli6, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(tblColaboradoresLayout.createSequentialGroup()
+                                                .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addGroup(tblColaboradoresLayout.createSequentialGroup()
+                                                        .addComponent(nombre)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGroup(tblColaboradoresLayout.createSequentialGroup()
+                                                        .addComponent(identificador)
+                                                        .addGap(40, 40, 40)
+                                                        .addComponent(txtIdentificador)))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(obli1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(obli2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGap(167, 167, 167)
+                                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(tblColaboradoresLayout.createSequentialGroup()
+                                                .addComponent(bSeleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(bActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(jLabel1)
+                                            .addComponent(bListar, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(tblColaboradoresLayout.createSequentialGroup()
+                                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(cargo)
+                                            .addComponent(telefono))
+                                        .addGap(62, 62, 62)
+                                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtTelefono)
+                                            .addComponent(boxCargo, 0, 250, Short.MAX_VALUE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(bConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(bEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(sueldobase))
-                        .addGap(0, 41, Short.MAX_VALUE))))
+                                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(obli7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(obli8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtSueldoBase, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(sueldobase))
+                                        .addGap(59, 59, 59)
+                                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(bEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                                                .addComponent(bVolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(bGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(0, 26, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tblColaboradoresLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(nuevoColabolador, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(230, 230, 230))))
         );
         tblColaboradoresLayout.setVerticalGroup(
             tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -376,63 +404,71 @@ public class NuevoTrabajador extends javax.swing.JFrame {
                     .addGroup(tblColaboradoresLayout.createSequentialGroup()
                         .addComponent(nuevoColabolador, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nombre)
-                            .addComponent(obli1)
+                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(tblColaboradoresLayout.createSequentialGroup()
+                                .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(nombre)
+                                    .addComponent(obli1))
+                                .addGap(9, 9, 9)
+                                .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtIdentificador, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(obli2)
+                                    .addComponent(identificador))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(edad)
+                                    .addComponent(obli3))
+                                .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(obli4)
+                                        .addComponent(jLabel1))
+                                    .addGroup(tblColaboradoresLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(direccion)))
+                                .addGap(8, 8, 8)
+                                .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(obli5)
+                                        .addComponent(boxComuna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(bListar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(tblColaboradoresLayout.createSequentialGroup()
+                                        .addGap(7, 7, 7)
+                                        .addComponent(comuna)))
+                                .addGap(6, 6, 6)
+                                .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(obli6)
+                                        .addComponent(bSeleccionar)
+                                        .addComponent(bActualizar))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(email)
+                                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(tblColaboradoresLayout.createSequentialGroup()
+                                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(telefono)
+                                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(obli7)
+                                            .addComponent(sueldobase))
+                                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(tblColaboradoresLayout.createSequentialGroup()
+                                                .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                    .addComponent(obli8)
+                                                    .addComponent(boxCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(cargo)
+                                                    .addComponent(txtSueldoBase, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jPanelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addGroup(tblColaboradoresLayout.createSequentialGroup()
+                                                .addGap(1, 1, 1)
+                                                .addComponent(bVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(tblColaboradoresLayout.createSequentialGroup()
+                                        .addGap(1, 1, 1)
+                                        .addComponent(bEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(bGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
-                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtIdentificador, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(obli2)
-                            .addComponent(bListar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(identificador))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(bEditar)
-                                .addComponent(bConfirmar))
-                            .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(edad)
-                                .addComponent(obli3)))
-                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(obli4)
-                                .addComponent(bEliminar))
-                            .addGroup(tblColaboradoresLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(direccion)))
-                        .addGap(6, 6, 6)
-                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(obli5)
-                                .addComponent(boxComuna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(tblColaboradoresLayout.createSequentialGroup()
-                                .addGap(7, 7, 7)
-                                .addComponent(comuna)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(obli6)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(email)
-                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(telefono)
-                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(obli7)
-                            .addComponent(sueldobase))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(tblColaboradoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(obli8)
-                            .addComponent(boxCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bVolver)
-                            .addComponent(cargo)
-                            .addComponent(txtSueldoBase, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(tblColaboradoresLayout.createSequentialGroup()
                         .addComponent(background2)
@@ -463,25 +499,198 @@ public class NuevoTrabajador extends javax.swing.JFrame {
     private void boxCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxCargoActionPerformed
         // TODO add your handling code here:
 
-
     }//GEN-LAST:event_boxCargoActionPerformed
 
     private void bListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bListarActionPerformed
         // TODO add your handling code here:
+
+        DefaultTableModel modelo = new DefaultTableModel();
+        Tabla.setModel(modelo);
+        modelo.addColumn("id_empleado");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Edad");
+        modelo.addColumn("Direccion");
+        modelo.addColumn("Comuna");
+        modelo.addColumn("Email");
+        modelo.addColumn("Telefono");
+        modelo.addColumn("Cargo");
+        modelo.addColumn("Sueldo");
+
+        DatoFormulario operacion = new DatoFormulario();
+        List datos = operacion.Empleado();
+        Iterator it = datos.iterator();
+        while (it.hasNext()) {
+            Empleado o = (Empleado) it.next();
+            Object[] fila = new Object[9];
+
+            fila[0] = o.getIdEmpleado();
+            fila[1] = o.getNombre();
+            fila[2] = o.getEdad();
+            fila[3] = o.getDireccion();
+            fila[4] = o.getComuna();
+            fila[5] = o.getEmail();
+            fila[6] = o.getNumeroTelefonico();
+            fila[7] = o.getNombreCargo();
+            fila[8] = o.getSueldoBase();
+            modelo.addRow(fila);
+        }
+
+
     }//GEN-LAST:event_bListarActionPerformed
 
-    private void bEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bEditarActionPerformed
+    private void bSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSeleccionarActionPerformed
+        // Extraer datos para editar
 
-    private void bConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConfirmarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bConfirmarActionPerformed
+//        if (Tabla.getSelectedRow() >= 0) {
+//            try {
+//                DefaultTableModel tm = (DefaultTableModel) Tabla.getModel();
+//                String Identificador = String.valueOf(tm.getValueAt(Tabla.getSelectedRow(), 0));
+//                String Nombre = String.valueOf(tm.getValueAt(Tabla.getSelectedRow(), 1));
+//                String Edad = String.valueOf(tm.getValueAt(Tabla.getSelectedRow(), 2));
+//                String Direccion = String.valueOf(tm.getValueAt(Tabla.getSelectedRow(), 3));
+//                //String Comuna = String.valueOf(tm.getValueAt(Tabla.getSelectedRow(), 4).toString());
+//                String Email = String.valueOf(tm.getValueAt(Tabla.getSelectedRow(), 5));
+//                String Telefono = String.valueOf(tm.getValueAt(Tabla.getSelectedRow(), 6));
+//                // pendiente String Cargo = String.valueOf(tm.getValueAt(Tabla.getSelectedRow(), 7));
+//                String Sueldo = String.valueOf(tm.getValueAt(Tabla.getSelectedRow(), 8));
+        if (Tabla.getRowCount() >= 0) {
+            try {
 
+                int selected_row = Tabla.getSelectedRow();
+                String Identificador = Tabla.getValueAt(selected_row, 0).toString();
+                String Nombre = Tabla.getValueAt(selected_row, 1).toString();
+                String Edad = Tabla.getValueAt(selected_row, 2).toString();
+                String Direccion = Tabla.getValueAt(selected_row, 3).toString();
+                String Comuna = Tabla.getValueAt(selected_row, 4).toString();
+                String Email = Tabla.getValueAt(selected_row, 5).toString();
+                String Telefono = Tabla.getValueAt(selected_row, 6).toString();
+                String Cargo = Tabla.getValueAt(selected_row, 7).toString();
+                String Sueldo = Tabla.getValueAt(selected_row, 8).toString();
+
+                txtIdentificador.setText(Identificador);
+                txtNombre.setText(Nombre);
+                txtEdad.setText(Edad);
+                txtDireccion.setText(Direccion);
+                boxComuna.setSelectedItem(Comuna);
+                txtEmail.setText(Email);
+                txtTelefono.setText(Telefono);
+                boxCargo.setSelectedItem(Cargo);
+                txtSueldoBase.setText(Sueldo);
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Seleccione un colabolador de la lista");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un colabolador de la lista", "SISTEMA", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_bSeleccionarActionPerformed
+
+    private void bActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bActualizarActionPerformed
+        // TODO add your handling code here:
+        if (boxCargo.getSelectedIndex()<=-1 ||boxComuna.getSelectedIndex()<=-1  ||  txtNombre.getText().isEmpty() || txtEmail.getText().isEmpty()
+                || txtDireccion.getText().isEmpty() || txtSueldoBase.getText().isEmpty()
+                || txtIdentificador.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtEdad.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay datos para actualizar !", "SISTEMA", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Empleado a = new Empleado();
+
+            String Nombre;
+            int Identificador;
+            int Edad;
+            String Email;
+            int Telefono;
+            String Direccion;
+            String Comuna;
+            String Cargo;
+            int SueldoBase;
+
+            Nombre = txtNombre.getText();
+            Identificador = Integer.parseInt(txtIdentificador.getText());
+            Edad = Integer.parseInt(txtEdad.getText());
+            Email = txtEmail.getText();
+            Telefono = Integer.parseInt(txtTelefono.getText());
+            Direccion = txtDireccion.getText();
+            Comuna = (String) boxComuna.getSelectedItem();
+            Cargo = (String) boxCargo.getSelectedItem();
+            SueldoBase = Integer.parseInt(txtSueldoBase.getText());
+
+            a.setNombre(Nombre);
+            a.setIdEmpleado(Identificador);
+            a.setEdad(Edad);
+            a.setEmail(Email);
+            a.setNumeroTelefonico(Telefono);
+            a.setDireccion(Direccion);
+            a.setComuna(Comuna);
+            a.setNombreCargo(Cargo);
+            a.setSueldoBase(SueldoBase);
+
+            txtNombre.setText("");
+            txtIdentificador.setText("");
+            txtEdad.setText("");
+            txtEmail.setText("");
+            txtTelefono.setText("");
+            txtDireccion.setText("");
+            boxComuna.setSelectedIndex(-1);
+            boxCargo.setSelectedIndex(-1);
+            txtSueldoBase.setText("");
+
+            NegocioFormulario nf = new NegocioFormulario();
+            boolean respuesta = nf.ActualizarDatos(a);
+    }//GEN-LAST:event_bActualizarActionPerformed
+    }
     private void bEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEliminarActionPerformed
         // TODO add your handling code here:
+        if (boxCargo.getSelectedIndex() <= -1 || boxComuna.getSelectedIndex() <= -1 || txtNombre.getText().isEmpty() || txtEmail.getText().isEmpty()
+                || txtDireccion.getText().isEmpty() || txtSueldoBase.getText().isEmpty()
+                || txtIdentificador.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtEdad.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No a seleccionado Colabolador para eliminar!", "SISTEMA", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Empleado el = new Empleado();
+            String Nombre;
+            int Identificador;
+            int Edad;
+            String Email;
+            int Telefono;
+            String Direccion;
+            String Comuna;
+            String Cargo;
+            int SueldoBase;
+
+            Nombre = txtNombre.getText();
+            Identificador = Integer.parseInt(txtIdentificador.getText());
+            Edad = Integer.parseInt(txtEdad.getText());
+            Email = txtEmail.getText();
+            Telefono = Integer.parseInt(txtTelefono.getText());
+            Direccion = txtDireccion.getText();
+            Comuna = (String) boxComuna.getSelectedItem();
+            Cargo = (String) boxCargo.getSelectedItem();
+            SueldoBase = Integer.parseInt(txtSueldoBase.getText());
+
+            el.setNombre(Nombre);
+            el.setIdEmpleado(Identificador);
+            el.setEdad(Edad);
+            el.setEmail(Email);
+            el.setNumeroTelefonico(Telefono);
+            el.setDireccion(Direccion);
+            el.setComuna(Comuna);
+            el.setNombreCargo(Cargo);
+            el.setSueldoBase(SueldoBase);
+
+            txtNombre.setText("");
+            txtIdentificador.setText("");
+            txtEdad.setText("");
+            txtEmail.setText("");
+            txtTelefono.setText("");
+            txtDireccion.setText("");
+            boxComuna.setSelectedIndex(-1);
+            boxCargo.setSelectedIndex(-1);
+            txtSueldoBase.setText("");
+
+            NegocioFormulario nf = new NegocioFormulario();
+            boolean respuesta = nf.EliminarDatos(el);
     }//GEN-LAST:event_bEliminarActionPerformed
 
+    }
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
@@ -495,7 +704,9 @@ public class NuevoTrabajador extends javax.swing.JFrame {
 
     private void bGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGuardarActionPerformed
         // Aqui va el boton GUARDAR
-        if (txtNombre.getText().isEmpty() || txtEmail.getText().isEmpty() || txtDireccion.getText().isEmpty()) {
+        if (boxCargo.getSelectedIndex() <= -1 || boxComuna.getSelectedIndex() <= -1 || txtNombre.getText().isEmpty() || txtEmail.getText().isEmpty()
+                || txtDireccion.getText().isEmpty() || txtSueldoBase.getText().isEmpty()
+                || txtIdentificador.getText().isEmpty() || txtTelefono.getText().isEmpty() || txtEdad.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Por favor complete el formulario");
         } else {
 
@@ -524,15 +735,15 @@ public class NuevoTrabajador extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Error de Ingreso: Debes ingresar únicamente los 8 o 9 dígitos del número telefonico.");
             }
 
-            String Comuna = (String) boxComuna.getSelectedItem();
-            String Cargo = (String) boxCargo.getSelectedItem();
-
             int SueldoBase = 0;
             try {
                 SueldoBase = Integer.parseInt(txtSueldoBase.getText());
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Error de Ingreso: Debes ingresar valores numericos");
             }
+
+            String Comuna = (String) boxComuna.getSelectedItem();
+            String Cargo = (String) boxCargo.getSelectedItem();
 
             Empleado e = new Empleado();
 
@@ -546,9 +757,18 @@ public class NuevoTrabajador extends javax.swing.JFrame {
             e.setNombreCargo(Cargo);
             e.setSueldoBase(SueldoBase);
 
+            txtNombre.setText("");
+            txtIdentificador.setText("");
+            txtEdad.setText("");
+            txtEmail.setText("");
+            txtTelefono.setText("");
+            txtDireccion.setText("");
+            boxComuna.setSelectedIndex(-1);
+            boxCargo.setSelectedIndex(-1);
+            txtSueldoBase.setText("");
+
             NegocioFormulario nf = new NegocioFormulario();
             boolean respuesta = nf.InsertarDatosFormulario(e);
-
         }
 
     }//GEN-LAST:event_bGuardarActionPerformed
@@ -586,32 +806,11 @@ public class NuevoTrabajador extends javax.swing.JFrame {
         if (txtTelefono.getText().length() >= 9) {
             evt.consume();
         }
-
     }//GEN-LAST:event_txtTelefonoKeyTyped
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
 
- // TODO add your handling code here: El jefe me mando esto
-//        DatoFormulario empleado1 = new DatoFormulario();
-//        
-//        List<DatoFormulario> DatoFormulario = empleado1.ListarEmpleado();
-//        
-//        DefaultTableModel tModel = (DefaultTableModel) tblColaboradores.getModel();
-//        tModel.setRowCount(0);
-//        System.out.println(DatoFormulario);
-//        for (Empleado empleado : DatoFormulario) {
-//            Object[] objetos = new Object[]{
-//                empleado.getNombre(),
-//                empleado.getIdEmpleado(),
-//                empleado.getEdad(),
-//                empleado.getDireccion(),
-//                empleado.getComuna(),
-//                empleado.getEmail(),
-//                empleado.getNumeroTelefonico(),
-//                empleado.getNombreCargo(),};
-//            tModel.addRow(objetos);
-//        }
-
+        // TODO add your handling code here: El jefe me mando esto
     }//GEN-LAST:event_formWindowActivated
 
     private void txtSueldoBaseKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSueldoBaseKeyTyped
@@ -620,6 +819,14 @@ public class NuevoTrabajador extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txtSueldoBaseKeyTyped
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
+
+    private void TablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaMouseClicked
+
+    }//GEN-LAST:event_TablaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -666,11 +873,11 @@ public class NuevoTrabajador extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Tabla;
-    private javax.swing.JButton bConfirmar;
-    private javax.swing.JButton bEditar;
+    private javax.swing.JButton bActualizar;
     private javax.swing.JButton bEliminar;
     private javax.swing.JButton bGuardar;
     private javax.swing.JButton bListar;
+    private javax.swing.JButton bSeleccionar;
     private javax.swing.JButton bVolver;
     private javax.swing.JLabel background2;
     private javax.swing.JComboBox<String> boxCargo;
@@ -681,6 +888,7 @@ public class NuevoTrabajador extends javax.swing.JFrame {
     private javax.swing.JLabel edad;
     private javax.swing.JLabel email;
     private javax.swing.JLabel identificador;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanelDatos;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel nombre;

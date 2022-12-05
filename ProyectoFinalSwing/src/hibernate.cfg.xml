@@ -46,8 +46,8 @@ Contributor(s):
     <property name="hibernate.connection.url">jdbc:mysql://localhost:8889/PROYECTOFINAL?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">root</property>
-    <mapping resource="Entidades/AsistenciaEntrada.hbm.xml"/>
     <mapping resource="Entidades/Empleado.hbm.xml"/>
-    <mapping resource="Entidades/AsistenciaSalida.hbm.xml"/>
+    <mapping resource="Entidades/Usuario.hbm.xml"/>
+    <mapping resource="Entidades/Asistencia.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

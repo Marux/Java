@@ -6,7 +6,8 @@ import java.awt.Color;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
-
+    
+    String usuarioSesion = null;
     public Login() {
         initComponents();
     }
@@ -135,22 +136,28 @@ public class Login extends javax.swing.JFrame {
 
     private void btloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btloginActionPerformed
         // TODO add your handling code here:
-        Usuario u = new Usuario();
+//        Usuario u = new Usuario();
         NegocioLogin n = new NegocioLogin();
 
         String usuario = txtUser.getText();
         String pasword = txtpass.getText();
 
-        u.setUser(usuario);
-        u.setPass(pasword);
+//        u.setIdEmpleado(Integer.parseInt(usuario));
+//        u.setPass(Integer.parseInt(pasword));
 
-        int respuesta = n.validaLoginNeg(u);
+//        int respuesta = n.validaLoginNeg(u);
+        int respuesta = n.validaLoginNeg(usuario, pasword);
         if (respuesta == 1) {
             //System.out.println("ok");
             this.setVisible(false);
             Pos p = new Pos();
             p.setVisible(true);
-
+        }    else if (respuesta == 2) {
+            usuarioSesion = usuario;
+            this.setVisible(false);
+            VistaColaborador VV = new VistaColaborador(usuarioSesion);
+            VV.setVisible(true);
+        
             //JOptionPane.showMessageDialog(null, "usuario correcto");
         } else {
             //System.out.println("no ok");

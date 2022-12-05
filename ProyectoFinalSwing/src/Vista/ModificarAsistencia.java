@@ -1,10 +1,27 @@
 package Vista;
 
+import Datos.DatoAsistencia;
+import Datos.DatoFormulario;
+import Entidades.Asistencia;
+import Entidades.Empleado;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 public class ModificarAsistencia extends javax.swing.JFrame {
 
     /**
      * Creates new form ModificarAsistencia
      */
+    String idABuscar = null;
     public ModificarAsistencia() {
         initComponents();
     }
@@ -26,15 +43,25 @@ public class ModificarAsistencia extends javax.swing.JFrame {
         background = new javax.swing.JPanel();
         background2 = new javax.swing.JLabel();
         bVolver = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        BotonBuscar = new javax.swing.JButton();
+        jbEditar = new javax.swing.JButton();
+        jbConfirmar = new javax.swing.JButton();
         jPanelDatos = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        Tabla = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        tblTablaDeDatos = new javax.swing.JTable();
+        jtfBuscaID = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jtfHoraEntrada = new javax.swing.JTextField();
+        jtfHoraSalida = new javax.swing.JTextField();
+        jlFecha = new javax.swing.JLabel();
+        jlHoraEntrada = new javax.swing.JLabel();
+        jlHoraSalida = new javax.swing.JLabel();
+        jtfFecha = new javax.swing.JTextField();
+        jtfIdBloq = new javax.swing.JTextField();
+        jtfNombreBloq = new javax.swing.JTextField();
+        jtfCargoBloq = new javax.swing.JTextField();
+        jtfRegInv = new javax.swing.JTextField();
 
         jRadioButton1.setText("jRadioButton1");
 
@@ -49,6 +76,11 @@ public class ModificarAsistencia extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         background.setBackground(new java.awt.Color(255, 255, 255));
@@ -66,31 +98,64 @@ public class ModificarAsistencia extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Buscar");
+        BotonBuscar.setBackground(new java.awt.Color(255, 255, 255));
+        BotonBuscar.setText("Buscar");
+        BotonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotonBuscarActionPerformed(evt);
+            }
+        });
 
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Editar");
+        jbEditar.setBackground(new java.awt.Color(255, 255, 255));
+        jbEditar.setText("Editar");
+        jbEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEditarActionPerformed(evt);
+            }
+        });
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Confirmar");
+        jbConfirmar.setBackground(new java.awt.Color(255, 255, 255));
+        jbConfirmar.setText("Confirmar");
+        jbConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbConfirmarActionPerformed(evt);
+            }
+        });
 
         jPanelDatos.setBackground(new java.awt.Color(245, 255, 255));
         jPanelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos"));
 
-        Tabla.setModel(new javax.swing.table.DefaultTableModel(
+        tblTablaDeDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id", "Nombre", "Fecha", "Hora Entrada", "Hora Salida", "Cargo"
+                "Id", "Nombre", "Fecha", "Hora Entrada", "Hora Salida", "Cargo", "IdRegistro"
             }
-        ));
-        jScrollPane1.setViewportView(Tabla);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, true, true, true, true, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblTablaDeDatos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTablaDeDatosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblTablaDeDatos);
+        if (tblTablaDeDatos.getColumnModel().getColumnCount() > 0) {
+            tblTablaDeDatos.getColumnModel().getColumn(6).setMinWidth(0);
+            tblTablaDeDatos.getColumnModel().getColumn(6).setPreferredWidth(0);
+            tblTablaDeDatos.getColumnModel().getColumn(6).setMaxWidth(0);
+        }
 
         javax.swing.GroupLayout jPanelDatosLayout = new javax.swing.GroupLayout(jPanelDatos);
         jPanelDatos.setLayout(jPanelDatosLayout);
@@ -108,11 +173,36 @@ public class ModificarAsistencia extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jtfBuscaID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfBuscaIDActionPerformed(evt);
+            }
+        });
+
         jLabel3.setText("ID:");
 
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabel4.setText("Modificar Asistencia Colaborador");
         jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        jlFecha.setText("Fecha");
+
+        jlHoraEntrada.setText("Hora Entrada");
+
+        jlHoraSalida.setText("Hora Salida");
+
+        jtfIdBloq.setEditable(false);
+        jtfIdBloq.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfIdBloqActionPerformed(evt);
+            }
+        });
+
+        jtfNombreBloq.setEditable(false);
+
+        jtfCargoBloq.setEditable(false);
+
+        jtfRegInv.setEditable(false);
 
         javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
         background.setLayout(backgroundLayout);
@@ -125,22 +215,40 @@ public class ModificarAsistencia extends javax.swing.JFrame {
                     .addGroup(backgroundLayout.createSequentialGroup()
                         .addGap(0, 409, Short.MAX_VALUE)
                         .addComponent(bVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(backgroundLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1)
-                        .addGap(18, 18, 18)
-                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtfBuscaID)
                             .addGroup(backgroundLayout.createSequentialGroup()
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jlFecha)
+                                    .addComponent(jlHoraEntrada)
+                                    .addComponent(jlHoraSalida))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3))
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtfHoraSalida, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jtfHoraEntrada)
+                                    .addComponent(jtfFecha)))
+                            .addGroup(backgroundLayout.createSequentialGroup()
+                                .addComponent(jtfIdBloq, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addComponent(jtfNombreBloq))
+                            .addComponent(jtfCargoBloq))
+                        .addGap(18, 18, 18)
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(backgroundLayout.createSequentialGroup()
+                                    .addComponent(jbEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jbConfirmar))
+                                .addComponent(BotonBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jtfRegInv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(20, 20, 20))
                     .addGroup(backgroundLayout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 6, Short.MAX_VALUE))
+                    .addComponent(jPanelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         backgroundLayout.setVerticalGroup(
@@ -152,17 +260,39 @@ public class ModificarAsistencia extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(backgroundLayout.createSequentialGroup()
+                                .addComponent(BotonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jbEditar)
+                                    .addComponent(jbConfirmar)))
+                            .addGroup(backgroundLayout.createSequentialGroup()
+                                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jtfBuscaID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jtfIdBloq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtfNombreBloq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jtfCargoBloq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(37, 37, 37)
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtfFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlFecha))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
-                            .addComponent(jButton3))
-                        .addGap(111, 111, 111)
+                            .addComponent(jlHoraEntrada)
+                            .addComponent(jtfHoraEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jtfHoraSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlHoraSalida)
+                            .addComponent(jtfRegInv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(8, 8, 8)))
                 .addContainerGap())
@@ -179,8 +309,169 @@ public class ModificarAsistencia extends javax.swing.JFrame {
         Pos P = new Pos();
         P.setVisible(true);
         
-
     }//GEN-LAST:event_bVolverActionPerformed
+
+    private void jtfBuscaIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfBuscaIDActionPerformed
+        
+    }//GEN-LAST:event_jtfBuscaIDActionPerformed
+
+    private void BotonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonBuscarActionPerformed
+        
+        idABuscar = jtfBuscaID.getText();
+        System.out.println(" TEXTO INGRESADO = " + idABuscar);
+        if (idABuscar == null || idABuscar.trim().equals("")){
+            JOptionPane.showMessageDialog(null, "Ingrese un ID antes de presionar Buscar ");
+            
+        } else {
+            DefaultTableModel TablaDeDatos = new DefaultTableModel();
+            tblTablaDeDatos.setModel(TablaDeDatos);
+            TablaDeDatos.addColumn("id");
+            TablaDeDatos.addColumn("Nombre");
+            TablaDeDatos.addColumn("Fecha");
+            TablaDeDatos.addColumn("Hora Entrada");
+            TablaDeDatos.addColumn("Hora Salida");
+            TablaDeDatos.addColumn("Cargo");
+            TablaDeDatos.addColumn("IdRegistro");
+
+            DatoAsistencia Busqueda = new DatoAsistencia();
+            DatoFormulario BusquedaConjunta = new DatoFormulario();
+            List<Asistencia> datos = Busqueda.Asistencia(Integer.parseInt(idABuscar));
+//            System.out.println(" ****" + datos);
+            List<Empleado> datos2 = BusquedaConjunta.DatoEmpleado(Integer.parseInt(idABuscar));
+//            System.out.println(" _____ " + datos2);
+            
+            Empleado e = new Empleado(); 
+            
+            if (datos2.size() >0 ){
+                e = datos2.get(0);
+            }
+//            System.out.println(" ||||||||||| " + e);
+            Iterator it = datos.iterator();
+            while (it.hasNext()) {
+                Asistencia a = (Asistencia) it.next();
+                Object[] fila = new Object[7];
+
+                fila[0] = a.getIdEmpleado();
+                fila[1] = e.getNombre();
+                fila[2] = a.getFecha();
+                fila[3] = a.getHoraEntrada();
+                fila[4] = a.getHoraSalida();
+                fila[5] = e.getNombreCargo();
+                fila[6] = a.getIdRegistro();
+
+                TablaDeDatos.addRow(fila);
+            }
+            JOptionPane.showMessageDialog(null, "ID ingresado es " + idABuscar);
+        }
+    }//GEN-LAST:event_BotonBuscarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        jlFecha.setVisible(false);
+        jtfFecha.setVisible(false);
+        jlHoraEntrada.setVisible(false);
+        jtfHoraEntrada.setVisible(false);
+        jlHoraSalida.setVisible(false);
+        jtfHoraSalida.setVisible(false);
+        jtfRegInv.setVisible(false);
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jbConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConfirmarActionPerformed
+        // TODO add your handling code here:
+        if (jtfFecha.getText().isEmpty() || jtfHoraEntrada.getText().isEmpty() || jtfHoraSalida.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Rellene todo los campos", "SISTEMA", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Date FechaActual = new Date();
+            Date date3 = new Date();
+            Date horaE = new Date();
+            Date horaS = new Date();
+            Asistencia a = new Asistencia();
+            Empleado e = new Empleado();
+            
+            String Id = jtfIdBloq.getText();
+            String Nombre = jtfNombreBloq.getText();
+            String Fecha = jtfFecha.getText();
+            String HoraEntrada = jtfHoraEntrada.getText();
+            String HoraSalida = jtfHoraSalida.getText();
+            String Cargo = jtfCargoBloq.getText();
+            int IdReg = Integer.parseInt(jtfRegInv.getText());
+            
+            try {
+                date3 = new SimpleDateFormat("yyyy-MM-dd").parse(Fecha);
+                horaE = new SimpleDateFormat("HH:mm:ss").parse(HoraEntrada);
+                horaS = new SimpleDateFormat("HH:mm:ss").parse(HoraSalida);
+            } catch (ParseException ex) {
+                Logger.getLogger(ModificarAsistencia.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            System.out.println(date3.getClass().getSimpleName());
+            System.out.println(HoraEntrada);
+            System.out.println(HoraSalida);
+            
+            a.setIdEmpleado(Integer.parseInt(Id));
+            e.setNombre(Nombre);
+            a.setFecha(date3);
+            a.setHoraEntrada(horaE);
+            a.setHoraSalida(horaS);
+            e.setNombreCargo(Cargo);
+            a.setIdRegistro(IdReg);
+           
+            jtfIdBloq.setText("");
+            jtfNombreBloq.setText("");
+            jtfFecha.setText("");
+            jtfHoraEntrada.setText("");
+            jtfHoraSalida.setText("");
+            jtfCargoBloq.setText("");
+            jtfRegInv.setText("");
+            
+            DatoAsistencia DA = new DatoAsistencia();
+            boolean respuesta = DA.ActAsistencia(a);      
+        }
+    }//GEN-LAST:event_jbConfirmarActionPerformed
+
+    private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
+        jlFecha.setVisible(true);
+        jtfFecha.setVisible(true);
+        jlHoraEntrada.setVisible(true);
+        jtfHoraEntrada.setVisible(true);
+        jlHoraSalida.setVisible(true);
+        jtfHoraSalida.setVisible(true);
+
+    }//GEN-LAST:event_jbEditarActionPerformed
+
+    private void tblTablaDeDatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTablaDeDatosMouseClicked
+        // TODO add your handling code here:
+        if (tblTablaDeDatos.getRowCount() >= 0) {
+            try {
+
+                int selected_row = tblTablaDeDatos.getSelectedRow();
+                String Id = tblTablaDeDatos.getValueAt(selected_row, 0).toString();
+                String Nombre = tblTablaDeDatos.getValueAt(selected_row, 1).toString();
+                String Fecha = tblTablaDeDatos.getValueAt(selected_row, 2).toString();
+                String HoraEntrada = tblTablaDeDatos.getValueAt(selected_row, 3).toString();
+                String HoraSalida = tblTablaDeDatos.getValueAt(selected_row, 4).toString();
+                String Cargo = tblTablaDeDatos.getValueAt(selected_row, 5).toString();
+                String IdReg = tblTablaDeDatos.getValueAt(selected_row, 6).toString();
+                
+                
+                jtfIdBloq.setText(Id);
+                jtfNombreBloq.setText(Nombre);
+                jtfFecha.setText(Fecha);
+                jtfHoraEntrada.setText(HoraEntrada);
+                jtfHoraSalida.setText(HoraSalida);
+                jtfCargoBloq.setText(Cargo);
+                jtfRegInv.setText(IdReg);
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Seleccione un colabolador de la lista");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione un colabolador de la lista", "SISTEMA", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_tblTablaDeDatosMouseClicked
+
+    private void jtfIdBloqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfIdBloqActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfIdBloqActionPerformed
 
     /**
      * @param args the command line arguments
@@ -218,13 +509,10 @@ public class ModificarAsistencia extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable Tabla;
+    private javax.swing.JButton BotonBuscar;
     private javax.swing.JButton bVolver;
     private javax.swing.JPanel background;
     private javax.swing.JLabel background2;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -232,8 +520,21 @@ public class ModificarAsistencia extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelDatos;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JButton jbConfirmar;
+    private javax.swing.JButton jbEditar;
+    private javax.swing.JLabel jlFecha;
+    private javax.swing.JLabel jlHoraEntrada;
+    private javax.swing.JLabel jlHoraSalida;
+    private javax.swing.JTextField jtfBuscaID;
+    private javax.swing.JTextField jtfCargoBloq;
+    private javax.swing.JTextField jtfFecha;
+    private javax.swing.JTextField jtfHoraEntrada;
+    private javax.swing.JTextField jtfHoraSalida;
+    private javax.swing.JTextField jtfIdBloq;
+    private javax.swing.JTextField jtfNombreBloq;
+    private javax.swing.JTextField jtfRegInv;
+    private javax.swing.JTable tblTablaDeDatos;
     // End of variables declaration//GEN-END:variables
 }

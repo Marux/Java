@@ -1,10 +1,15 @@
 package Vista;
 
-import Entidades.AsistenciaEntrada;
-import Entidades.AsistenciaSalida;
-import Negocio.EntradaAsistencia;
-import Negocio.SalidaAsistencia;
+import Datos.DatoAsistencia;
+import Datos.DatoFormulario;
+import Entidades.Asistencia;
+import Entidades.Empleado;
+import Negocio.NegocioAsistencia;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,9 +19,14 @@ public class VistaColaborador extends javax.swing.JFrame {
 
     /**
      * Creates new form VistaColaborador
-     */
+     */    
+    String VariableBonita = null;
     public VistaColaborador() {
+    initComponents();
+    }
+    public VistaColaborador(String usuarioSesion) {
         initComponents();
+        VariableBonita = usuarioSesion;
     }
 
     /**
@@ -33,7 +43,7 @@ public class VistaColaborador extends javax.swing.JFrame {
         Colaborador = new javax.swing.JLabel();
         bEntrada = new javax.swing.JButton();
         bSalida = new javax.swing.JButton();
-        bPreLiquidacion = new javax.swing.JButton();
+        jbPreview = new javax.swing.JButton();
         bSalir = new javax.swing.JButton();
         Asistencia = new javax.swing.JLabel();
         PreLiquidacion = new javax.swing.JLabel();
@@ -42,11 +52,17 @@ public class VistaColaborador extends javax.swing.JFrame {
         tablaAsistencia = new javax.swing.JTable();
         jPanelDatos1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tablaAsistencia1 = new javax.swing.JTable();
+        tblPreLiquidacion = new javax.swing.JTable();
+        lblColaborador = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         background.setBackground(new java.awt.Color(255, 255, 255));
@@ -55,7 +71,7 @@ public class VistaColaborador extends javax.swing.JFrame {
 
         Colaborador.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         Colaborador.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Colaborador.setText("Bienvenido Colaborador");
+        Colaborador.setText("Bienvenido");
 
         bEntrada.setBackground(new java.awt.Color(255, 255, 255));
         bEntrada.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
@@ -77,10 +93,15 @@ public class VistaColaborador extends javax.swing.JFrame {
             }
         });
 
-        bPreLiquidacion.setBackground(new java.awt.Color(255, 255, 255));
-        bPreLiquidacion.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
-        bPreLiquidacion.setText("Pre-Visualizar");
-        bPreLiquidacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbPreview.setBackground(new java.awt.Color(255, 255, 255));
+        jbPreview.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
+        jbPreview.setText("Pre-Visualizar");
+        jbPreview.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbPreview.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbPreviewActionPerformed(evt);
+            }
+        });
 
         bSalir.setBackground(new java.awt.Color(255, 255, 255));
         bSalir.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
@@ -134,24 +155,26 @@ public class VistaColaborador extends javax.swing.JFrame {
         jPanelDatos1.setBackground(new java.awt.Color(245, 255, 255));
         jPanelDatos1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos"));
 
-        tablaAsistencia1.setModel(new javax.swing.table.DefaultTableModel(
+        tblPreLiquidacion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
                 "Id", "Nombre", "Dias Trabajados", "Sueldo Base", "Bono Asistencia", "Bono Responsabilidad", "Desc. AFP", "Desc. Salud", "Sueldo Bruto", "Sueldo Liquido"
             }
-        ));
-        jScrollPane2.setViewportView(tablaAsistencia1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblPreLiquidacion.setEnabled(false);
+        tblPreLiquidacion.setRowHeight(79);
+        tblPreLiquidacion.setRowSelectionAllowed(false);
+        jScrollPane2.setViewportView(tblPreLiquidacion);
 
         javax.swing.GroupLayout jPanelDatos1Layout = new javax.swing.GroupLayout(jPanelDatos1);
         jPanelDatos1.setLayout(jPanelDatos1Layout);
@@ -169,6 +192,9 @@ public class VistaColaborador extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        lblColaborador.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        lblColaborador.setText("jLabel1");
+
         javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
         background.setLayout(backgroundLayout);
         backgroundLayout.setHorizontalGroup(
@@ -179,10 +205,12 @@ public class VistaColaborador extends javax.swing.JFrame {
                     .addGroup(backgroundLayout.createSequentialGroup()
                         .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(backgroundLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(backgroundLayout.createSequentialGroup()
-                                        .addGap(187, 187, 187)
-                                        .addComponent(Colaborador))
+                                    .addComponent(jPanelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jPanelDatos1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(backgroundLayout.createSequentialGroup()
+                                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(backgroundLayout.createSequentialGroup()
                                         .addGap(18, 18, 18)
                                         .addComponent(Asistencia)
@@ -194,13 +222,13 @@ public class VistaColaborador extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(PreLiquidacion)
                                         .addGap(18, 18, 18)
-                                        .addComponent(bPreLiquidacion)))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(backgroundLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jPanelDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jPanelDatos1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                        .addComponent(jbPreview))
+                                    .addGroup(backgroundLayout.createSequentialGroup()
+                                        .addGap(187, 187, 187)
+                                        .addComponent(Colaborador)
+                                        .addGap(26, 26, 26)
+                                        .addComponent(lblColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(backgroundLayout.createSequentialGroup()
                         .addGap(220, 220, 220)
@@ -214,7 +242,11 @@ public class VistaColaborador extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(backgroundLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Colaborador)
+                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Colaborador)
+                    .addGroup(backgroundLayout.createSequentialGroup()
+                        .addComponent(lblColaborador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(2, 2, 2)))
                 .addGap(24, 24, 24)
                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Asistencia)
@@ -225,7 +257,7 @@ public class VistaColaborador extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PreLiquidacion)
-                    .addComponent(bPreLiquidacion))
+                    .addComponent(jbPreview))
                 .addGap(18, 18, 18)
                 .addComponent(jPanelDatos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
@@ -246,34 +278,115 @@ public class VistaColaborador extends javax.swing.JFrame {
     }//GEN-LAST:event_bSalirActionPerformed
 
     private void bEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEntradaActionPerformed
-        // Registro engtrada asistencia
-
+ 
         Date FechaActual = new Date();
-
-        AsistenciaEntrada a = new AsistenciaEntrada();
+        Asistencia a = new Asistencia();
         a.setFecha(FechaActual);
         a.setHoraEntrada(FechaActual);
-        a.setIdEmpleado(23778674);
+        a.setIdEmpleado(Integer.parseInt(VariableBonita));
 
-        EntradaAsistencia na = new EntradaAsistencia();
-        boolean respuesta = na.EntradaAsistencia(a);
+        NegocioAsistencia na = new NegocioAsistencia();
+        boolean respuesta = na.InsertarAsistencia(a);
 
 
     }//GEN-LAST:event_bEntradaActionPerformed
 
     private void bSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSalidaActionPerformed
-        // registro de salida
-        
+
         Date FechaActual = new Date();
 
-        AsistenciaSalida a = new AsistenciaSalida();
-        a.setFecha(FechaActual);
+        Asistencia a = new Asistencia();
         a.setHoraSalida(FechaActual);
-        a.setIdEmpleado(23778674);
+        a.setIdEmpleado(Integer.parseInt(VariableBonita));
 
-        SalidaAsistencia na = new SalidaAsistencia();
-        boolean respuesta = na.SalidaAsistencia(a);
+        NegocioAsistencia na = new NegocioAsistencia();
+        boolean respuesta = na.InsertarSalida(a);
+        
     }//GEN-LAST:event_bSalidaActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        
+        lblColaborador.setText(VariableBonita);
+        
+        DefaultTableModel tblAsistencia = new DefaultTableModel();
+        tablaAsistencia.setModel(tblAsistencia);
+        tblAsistencia.addColumn("id");
+        tblAsistencia.addColumn("Fecha");
+        tblAsistencia.addColumn("Hora Entrada");
+        tblAsistencia.addColumn("Hora Salida");
+        
+        DatoAsistencia operacion = new DatoAsistencia();
+        List<Asistencia> datos = operacion.Asistencia(Integer.parseInt(VariableBonita));
+        Iterator it = datos.iterator();
+        while (it.hasNext()) {
+            Asistencia a = (Asistencia) it.next();
+            Object[] fila = new Object[4];
+
+            fila[0] = a.getIdEmpleado();
+            fila[1] = a.getFecha();
+            fila[2] = a.getHoraEntrada();
+            fila[3] = a.getHoraSalida();
+
+            tblAsistencia.addRow(fila);
+           
+       }
+//
+//        JOptionPane.showMessageDialog(null, "Lista cargada con exito", "", WIDTH);
+//        
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jbPreviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPreviewActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel tblPreview = new DefaultTableModel();
+        tblPreLiquidacion.setModel(tblPreview);
+        tblPreview.addColumn("Id");
+        tblPreview.addColumn("Nombre");
+        tblPreview.addColumn("Dias Trabajados");
+        tblPreview.addColumn("Sueldo Base");
+        tblPreview.addColumn("Bono Asistencia");
+        tblPreview.addColumn("Bono Responsabilidad");
+        tblPreview.addColumn("Desc. AFP");
+        tblPreview.addColumn("Desc. Salud");
+        tblPreview.addColumn("Sueldo Bruto");
+        tblPreview.addColumn("Sueldo Líquido");
+        
+        DatoAsistencia Da = new DatoAsistencia();
+        DatoFormulario Df = new DatoFormulario();
+        List<Asistencia> datos = Da.Asistencia(Integer.parseInt(VariableBonita));
+//        System.out.println(Da.CountAsistencia(Integer.parseInt(VariableBonita)));
+        List<Empleado> datos2 = Df.DatoEmpleado(Integer.parseInt(VariableBonita));
+        Empleado e = new Empleado(); 
+
+        if (datos2.size() >=0 ){
+            e = datos2.get(0);
+        }
+        Iterator it = datos.iterator();
+        for (int i = 0; i < 1; i++){
+            Asistencia a = (Asistencia) it.next();
+            Object[] fila = new Object[10];
+
+            fila[0] = a.getIdEmpleado();
+            fila[1] = e.getNombre();
+            Long DiasTrabajados = Da.CountAsistencia(Integer.parseInt(VariableBonita));
+            fila[2] = DiasTrabajados;
+            fila[3] = e.getSueldoBase();
+            int BonoAsistencia = 30000;
+            fila[4] = BonoAsistencia;
+            int BonoResponsabilidad = 20000;
+            fila[5] = BonoResponsabilidad;
+            double DescAFP = e.getSueldoBase()*0.12;
+            fila[6] = DescAFP;
+            double DescSalud = e.getSueldoBase()*0.10;
+            fila[7] = DescSalud;
+            int SueldoBruto = e.getSueldoBase()+BonoAsistencia+BonoResponsabilidad;
+            fila[8] = SueldoBruto;
+            double SueldoLiquido = SueldoBruto-DescAFP-DescSalud;
+            fila[9] = SueldoLiquido;
+
+            tblPreview.addRow(fila);
+           
+       }
+    }//GEN-LAST:event_jbPreviewActionPerformed
 
     /**
      * @param args the command line arguments
@@ -315,7 +428,6 @@ public class VistaColaborador extends javax.swing.JFrame {
     private javax.swing.JLabel Colaborador;
     private javax.swing.JLabel PreLiquidacion;
     private javax.swing.JButton bEntrada;
-    private javax.swing.JButton bPreLiquidacion;
     private javax.swing.JButton bSalida;
     private javax.swing.JButton bSalir;
     private javax.swing.JPanel background;
@@ -324,7 +436,9 @@ public class VistaColaborador extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelDatos1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton jbPreview;
+    private javax.swing.JLabel lblColaborador;
     private javax.swing.JTable tablaAsistencia;
-    private javax.swing.JTable tablaAsistencia1;
+    private javax.swing.JTable tblPreLiquidacion;
     // End of variables declaration//GEN-END:variables
 }

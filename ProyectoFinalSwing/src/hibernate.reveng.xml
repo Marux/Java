@@ -41,7 +41,7 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="PROYECTOFINAL"/>
-  <table-filter match-name="AsistenciaSalida"/>
+  <table-filter match-name="asistencia"/>
   <table-filter match-name="Empleado"/>
-  <table-filter match-name="AsistenciaEntrada"/>
+  <table-filter match-name="usuario"/>
 </hibernate-reverse-engineering>

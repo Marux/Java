@@ -7,7 +7,3 @@ Se agregan tabla SQL
 02-12-2022
 1- evaluacion: nota 7. Eximidos !
 
-@alfred
-@oveja
-@alexander
-@victor

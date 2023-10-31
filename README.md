@@ -40,7 +40,7 @@ El proyecto ProyectoFinalSwing utiliza una base de datos MySQL para gestionar lo
      - Password: La contraseña de MySQL que configures en MAMP.
 
 4. **Importar la Base de Datos desde el Archivo SQL**:
-   - Abre el archivo SQL de respaldo que se encuentra en este repositorio (por ejemplo, `nombrearchivo.sql`) en MySQL Workbench.
+   - Abre el archivo SQL de respaldo que se encuentra en este repositorio `PROYECTOFINAL.sql` en MySQL Workbench.
    - Ejecuta el archivo SQL para importar la base de datos y las tablas.
 
 5. **Actualizar la Configuración en la Aplicación**:
@@ -54,6 +54,6 @@ Si deseas contribuir, mejorar o ampliar cualquiera de estos proyectos, ¡las con
 
 ## Contacto
 
-Si deseas contactarme, puedes hacerlo a través de mi correo electrónico: [tu@email.com]
+Si deseas contactarme, puedes hacerlo a través de mi [Instagram](https://www.instagram.com/vmtrdev/)
 
 ¡Gracias por visitar mi repositorio!
